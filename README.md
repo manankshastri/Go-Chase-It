@@ -1,2 +1,2 @@
 # Go-Chase-It
- Ball chasing robot
+ ball chasing robot
