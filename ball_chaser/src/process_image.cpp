@@ -9,31 +9,24 @@ ros::ServiceClient client;
 // This function calls the command_robot service to drive the robot in the specified direction
 void drive_robot(float lin_x, float ang_z) {
 	
-  // Request a service and pass the velocities to it to drive the robot
+	// Request a service and pass the velocities to it to drive the robot
 	ROS_INFO_STREAM("ATTEMPTING TO MOVE THE ROBOT...");
-	
+
 	ball_chaser::DriveToTarget srv;
 	srv.request.linear_x = lin_x;
 	srv.request.angular_z = ang_z;
-	
+
 	// Call the /ball_chaser/command_robot service and pass the velocities
 	if (!client.call(srv))
-        ROS_ERROR("FAILED TO CALL THE SERVICE /ball_chaser/command_robot......");
+		ROS_ERROR("FAILED TO CALL THE SERVICE /ball_chaser/command_robot......");
 }
 
 // This callback function continuously executes and reads the image data	
 void process_image_callback(const sensor_msgs::Image img) {
-
-    
-    // TODO: Loop through each pixel in the image and check if there's a bright white one
-    // Then, identify if this pixel falls in the left, mid, or right side of the image
-    // Depending on the white ball position, call the drive_bot function and pass velocities to it
-    // Request a stop when there's no white ball seen by the camera
-	
 	
 	/* 
-		Counting the number of white pixels: if they are in the left/middle/right side of the image
-		Computing maximum white pixel count; moving the robot in the direction related to this max count. 
+		Counting the number of blue pixels: if they are on the left/middle/right side of the image.
+		Computing maximum blue pixel count; moving the robot in the direction related to this max count. 
 		An additional string variable for status info 
 		
 		Reference: 
@@ -91,6 +84,7 @@ void process_image_callback(const sensor_msgs::Image img) {
 }
 
 int main(int argc, char** argv) {
+	
 	// Initialize the process_image node and create a handle to it
 	ros::init(argc, argv, "process_image");
 	ros::NodeHandle n;
