@@ -5,3 +5,4 @@
 - [x] updated robot design
 - [x] updated world
 - [x] stop robot when the ball is too close
+- [ ] laser scan?
